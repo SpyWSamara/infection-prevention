@@ -1,5 +1,5 @@
 (function() {
-    let maindata = [{
+    var maindata = [{
             lsd95: 1.16,
             fnoa: -0.02,
             pshf: 1.89,
@@ -19,7 +19,7 @@
             indifny: 0.5,
             specigg: 10.47,
             correction: -249.77,
-            result: 'Риск внутриутробного инфицирования высокий. Проводится повторный курс превентивной терапии.',
+            result: 'Риск внутриутробного инфицирования высокий. Проводится повторный курс превентивной терапии в 32-34 нед. гестации препаратом человеческого рекомбинантного интерферона альфа-2b: по 1свече (500000 МЕ), 2 раза в день каждые 12 часов, per rectum, 5 дней.',
         },
         {
             lsd95: 1.87,
@@ -30,11 +30,11 @@
             indifny: 0.35,
             specigg: 4.68,
             correction: -186.62,
-            result: 'Риск реализации герпетической инфекции высокий. Проводится повторный курс превентивной терапии.',
+            result: 'Риск реализации герпетической инфекции высокий. Проводится повторный курс превентивной терапии в 32-34 нед. гестации препаратом человеческого рекомбинантного интерферона альфа-2b: по 1свече (500000 МЕ), 2 раза в день каждые 12 часов, per rectum, 5 дней.',
         },
     ];
 
-    let form = document.querySelector('main #mainform'),
+    var form = document.querySelector('main #mainform'),
         result = document.querySelector('main #result');
 
     if (form) {
@@ -45,13 +45,13 @@
         });
     }
 
-    let handleForm = function(currentForm) {
+    var handleForm = function(currentForm) {
         hideResult();
-        let fields = currentForm.querySelectorAll('.mdl-textfield'),
+        var fields = currentForm.querySelectorAll('.mdl-textfield'),
             results = Array(maindata.length).fill(0);
 
         fields.forEach(function(formFieldNode) {
-            let values = getFieldValue(formFieldNode);
+            var values = getFieldValue(formFieldNode);
             values.forEach(function(variant, index) {
                 results[index] += variant;
             });
@@ -61,21 +61,18 @@
         });
         selectResults(results);
     }
-    let selectResults = function(results) {
-        let maxResult = Math.max.apply(null, results),
+    var selectResults = function(results) {
+        var maxResult = Math.max.apply(null, results),
             resultVariant = maindata[results.indexOf(maxResult)];
 
-        let p = Math.pow(Math.E, maxResult) / results.map(x => Math.pow(Math.E, x)).reduce((a, b) => a + b, 0);
+        // var p = Math.pow(Math.E, maxResult) / results.map(x => Math.pow(Math.E, x)).reduce((a, b) => a + b, 0);
         showResult(resultVariant.result);
-        console.log(results);
-        console.log(maxResult);
-        console.log(p);
     }
-    let getFieldValue = function(fieldNode) {
+    var getFieldValue = function(fieldNode) {
         fieldNode.classList.remove('is-invalid');
-        let input = fieldNode.querySelector('input');
+        var input = fieldNode.querySelector('input');
         if (input && input.value) {
-            let value = parseFloat(input.value),
+            var value = parseFloat(input.value),
                 results = [];
 
             maindata.forEach(function(maindataVariant, index) {
@@ -87,16 +84,16 @@
         fieldNode.classList.add('is-invalid');
         return false;
     }
-    let showResult = function(resultTextString) {
+    var showResult = function(resultTextString) {
         if (result && resultTextString.length > 0) {
-            let resultText = result.querySelector('.mdl-card__supporting-text p');
+            var resultText = result.querySelector('.mdl-card__supporting-text p');
             if (resultText) {
                 resultText.innerText = resultTextString;
                 result.classList.remove('hidden');
             }
         }
     }
-    let hideResult = function() {
+    var hideResult = function() {
         if (result) {
             result.classList.add('hidden');
         }
